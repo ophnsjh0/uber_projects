@@ -1,0 +1,29 @@
+---
+- name: Apply full config from matching file with serial number
+  hosts: arista_switches
+  gather_facts: no
+  serial: 2
+
+  vars:
+    config_dir: "./config"
+
+  tasks:
+    - name: Add delay before applying config (buffer)
+      ansible.builtin.pause:
+        seconds: 5
+
+    - name: Find config file matching serial
+      ansible.builtin.find:
+        paths: "{{ config_dir }}"
+        patterns: "*{{ hostvars[inventory_hostname]['device_serial'] }}.txt"
+        file_type: file
+      register: matched_config
+
+    - name: Fail if no config file found
+      ansible.builtin.fail:
+        msg: "No config file found for serial {{ hostvars[inventory_hostname]['device_serial'] }}"
+      when: matched_config.files | length == 0
+
+    - name: Apply full config from matched file
+      arista.eos.eos_config:
+        src: "{{ matched_config.files[0].path }}"

@@ -1,0 +1,57 @@
+# https://github.com/ansible-collections/arista.eos/blob/main/docs/arista.eos.eos_acls_module.rst
+
+---
+- name: Arista ICMP ACL Setup
+  hosts: arista
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Configure ICMP ACL
+      arista.eos.eos_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: icmp_filter
+                aces:
+                  - sequence: 10
+                    grant: permit
+                    protocol: icmp
+                    source: 
+                      subnet_address: 192.168.54.23/32
+                    destination:
+                      any : true
+                  - sequence: 20
+                    grant: permit
+                    protocol: icmp
+                    source: 
+                      subnet_address: 192.168.74.130/32
+                    destination:
+                      any: true
+                  - sequence: 30
+                    grant: deny
+                    protocol: icmp
+                    source:
+                      any: true
+                    destination:
+                      any: true
+                  - sequence: 40
+                    grant: permit
+                    protocol: ip
+                    source: 
+                      any: true
+                    destination: 
+                      any: true
+        state: merged
+
+    - name: Apply ACL to interface mgmt
+      arista.eos.eos_acl_interfaces:
+        config:
+          - name: control-plane
+            access_groups:
+              - afi: ipv4
+                acls:
+                  - name: icmp_filter
+                    direction: in
+        state: merged
+

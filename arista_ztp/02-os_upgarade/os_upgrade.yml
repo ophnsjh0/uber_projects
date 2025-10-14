@@ -1,0 +1,58 @@
+---
+- name: Upgrade EOS on Arista switch
+  hosts: arista_switches
+  gather_facts: no
+  connection: network_cli
+  vars:
+    image_name: "EOS-4.32.5M.swi"
+    image_md5: "7d15c20304f6637036cf9bc8f8303ad5"
+    http_server: "10.10.10.1:80"
+
+  tasks:
+    - name: Step 1 - Copy EOS image from HTTP server
+      arista.eos.eos_command:
+        commands:
+          - "copy http://{{ http_server }}/{{ image_name }} flash:"
+      tags: copy
+      register: copy_result
+
+    - name: Step 2 - Verify image checksum
+      arista.eos.eos_command:
+        commands:
+          - "verify /md5 flash:{{ image_name }}"
+      register: verify_output
+      when: copy_result is defined and copy_result.changed
+      tags: verify
+
+    - name: Debug verify output
+      debug:
+        var: verify_output
+      when: verify_output is defined
+      tags: debug
+
+    - name: Step 2b - Validate checksum match
+      assert:
+        that:
+          - image_md5 in verify_output.stdout_lines[0]
+        fail_msg: "Checksum does not match. Aborting upgrade."
+      when: verify_output is defined and verify_output.stdout_lines is defined
+      tags: verify
+
+    - name: Step 3 - Configure boot system to new image
+      arista.eos.eos_config:
+        lines:
+          - "boot system flash:{{ image_name }}"
+      tags: boot
+
+    - name: Step 4 - Reload the switch
+      arista.eos.eos_command:
+        commands:
+          - "reload now"
+      ignore_errors: yes  
+      tags: reload
+
+    - name: Step 5 - Wait for switch to come back (manual re-run step)
+      debug:
+        msg: "Please re-run the playbook with the `--tags version` after switch reboot"
+      tags: wait
+

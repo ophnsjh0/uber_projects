@@ -1,0 +1,127 @@
+!
+! boot system flash:/EOS64-4.32.4M.swi
+!
+hostname YouidoWM_L2_1
+!
+no aaa root
+!
+clock timezone Asia/Seoul
+!
+spanning-tree mode rapid-pvst
+!
+interface Port-Channel1
+ description ## YouidoWM_SW_L3, Po11##
+ switchport mode trunk
+!
+interface Ethernet1
+ description ## YouidoWM_SW_L3_1 eth3 ##
+ channel-group 1 mode active
+!
+interface Ethernet2
+ description ## YouidoWM_SW_L3_2 eth3 ##
+ channel-group 1 mode active
+!
+interface Ethernet3
+ description ## PC ##
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet4
+ description ## PC ##
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet5
+ description ## PC ##
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet6
+ description ## PC ##
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet7
+ description ## PC ##
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet8
+ description ## PC ##
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Vlan1
+ ip address 45.2.44.223 255.255.255.0
+!
+no ip routing
+no ip icmp redirect
+ip icmp rate-limit-unreachable 0
+ip route 0.0.0.0/0 45.2.44.241 
+!
+ip ftp username nwftp
+ip ftp password Tksxhflsl1
+!
+logging host 182.198.132.85
+ip access-list standard 2
+ 10 permit 45.12.140.132
+ 20 permit 45.219.1.89
+ 23 permit 45.212.31.94
+ 30 permit 182.198.152.47
+ 40 permit 182.198.156.33
+ 50 permit 182.198.156.34
+ 60 permit 182.198.156.35
+ 70 permit 45.1.80.157
+ 80 permit 45.112.7.187
+ 90 permit 45.1.80.158
+ 100 permit 45.1.80.159
+ 22 permit 45.1.81.145
+ 21 permit 45.1.81.144
+ 110 permit 45.15.120.180
+ 120 permit 182.198.152.24
+ 130 deny   any
+ip access-list standard 1300
+ 10 permit 182.195.85.14
+ 20 permit 182.198.132.85
+ 30 permit 182.198.152.47
+ 40 permit 182.198.156.33
+ 50 permit 182.198.156.34
+ 60 permit 182.198.156.35
+ 70 permit 182.198.152.24
+ 80 deny   any
+!
+snmp-server community ghfod2~~ RO 1300
+tacacs-server directed-request
+tacacs-server key sable
+!
+banner login
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//   - This system is to be logged in to or                         //
+//     used only by specifically authorized personnel.              //
+//   - Any unauthorized use of the system is unlawful, and may be   //
+//     subject to civil and/or criminal penalties.                  //
+//   - Any use of the system may be logged or monitored, and the    //
+//     resulting logs may be used as evidence in court              //
+//   - In logging in this system, we assume                         //
+//     that you already agree our policy.                           //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+EOF
+!
+alias exec sr show run
+alias exec sri show run | in
+alias exec srb show run | be
+alias exec c config t
+!
+management console
+   idle-timeout 5
+!
+aaa authorization exec default local
+!
+management ssh
+   ip access-group 2 in
+!
+ntp server 45.1.40.184
+ntp server 45.12.30.159
+!

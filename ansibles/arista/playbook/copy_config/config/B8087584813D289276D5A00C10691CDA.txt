@@ -1,0 +1,396 @@
+!
+! boot system flash:/EOS64-4.32.4M.swi
+!
+hostname YouidoWM_L3_2
+!
+vrf instance MGMT
+!
+no aaa root
+!
+clock timezone Asia/Seoul
+!
+ip routing
+no ip icmp redirect
+ip icmp rate-limit-unreachable 0
+no ip routing vrf MGMT
+!
+spanning-tree mode rapid-pvst
+no spanning-tree vlan-id 4094
+!
+spanning-tree vlan 1,10,99 priority 4096
+!
+vlan 10,99 
+!
+vlan 4094
+   name MLAG
+   trunk group MLAG
+!
+interface Port-Channel11
+   description ## Youido_L2_1 ##
+   switchport mode trunk
+   mlag 11
+!
+interface Port-Channel12
+   description ## Youido_L2_2 ##
+   switchport mode trunk
+   mlag 12
+!
+interface Port-Channel1
+   description ## MLAG Peer ##
+   switchport mode trunk
+   switchport trunk group MLAG
+!
+interface Ethernet1
+ description ##  YD_BB_2 & Fa3/28 #
+ no switchport
+ ip address 45.236.24.2 255.255.255.0
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 10 md5 7 ghfod2~~
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+ ip ospf mtu-ignore
+ ip ospf cost 1000
+ load-interval 30
+ speed 100full
+!
+interface Ethernet2
+ description ## Clinet PC ##
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface Ethernet3
+ description ## Youido_L2_1 ##
+ channel-group 11 mode active
+!
+interface Ethernet4
+ description ## Youido_L2_2 ##
+ channel-group 12 mode active
+!
+interface Ethernet5
+ description ## Youido_L2_3 ##
+ channel-group 13 mode active
+!
+interface Ethernet6
+ description ## Youido_L2_4 ##
+ channel-group 14 mode active
+!
+interface Ethernet7
+ description ## YouidoWM_L3_1 ##
+ channel-group 1 mode active
+!
+interface Ethernet8
+ description ## YouidoWM_L3_1 ##
+ channel-group 1 mode active
+!
+interface Vlan4094
+   description MLAG Vlan
+   no autostate
+   ip address 192.168.45.2/30
+!
+mlag configuration
+   domain-id mlag
+   local-interface Vlan4094
+   peer-address 192.168.45.1
+   peer-link Port-Channel1
+   dual-primary detection delay 1 action errdisable all-interfaces
+!
+ip virtual-router mac-address 688b.f4aa.aaab
+!
+interface Vlan1
+ description ## Youido JW_LAN ## 
+ ip address 45.2.44.244 255.255.255.0
+ ip virtual-router address 45.2.44.241
+ ip virtual-router address 45.2.44.242
+ ip address 45.9.49.244 255.255.255.0 secondary
+ ip virtual-router address 45.9.49.241
+ ip virtual-router address 45.9.49.241
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 10 md5 7 ghfod2~~
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+ load-interval 30
+!
+interface Vlan10
+ description ## Youido CW_LAN ##
+ ip address 45.45.44.243/24
+ ip virtual-router address 45.45.44.241
+ ip virtual-router address 45.45.44.242
+!
+interface Vlan99
+ description ## Wireless_LAN ##
+ ip address 45.98.49.244 255.255.255.0
+ ip virtual-router address 45.98.49.241
+ ip virtual-router address 45.98.49.242
+ ip address 45.99.49.244 255.255.255.0 secondary
+ ip virtual-router address 45.99.49.241
+ ip virtual-router address 45.99.49.242
+ ip address 45.18.103.244 255.255.255.0 secondary
+ ip virtual-router address 45.18.103.241
+ ip virtual-router address 45.18.103.242
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 10 md5 ghfod2~~
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+ load-interval 30
+!
+router ospf 45
+ auto-cost reference-bandwidth 10000
+ area 40 stub
+ passive-interface Vlan10
+ network 45.0.0.0 0.255.255.255 area 40
+!
+ip ftp username nwftp
+ip ftp password Tksxhflsl1!
+ip route 45.1.0.0 255.255.0.0 45.235.17.1
+ip route 45.1.0.0 255.255.0.0 45.236.24.1
+ip route 45.9.100.0 255.255.255.0 45.235.17.1
+ip route 45.9.100.0 255.255.255.0 45.236.24.1
+ip route 45.9.110.0 255.255.255.0 45.235.17.1
+ip route 45.9.110.0 255.255.255.0 45.236.24.1
+ip route 45.9.206.53 255.255.255.255 45.236.24.1
+ip route 45.9.206.59 255.255.255.255 45.236.24.1
+ip route 45.10.116.210 255.255.255.255 45.236.24.1
+ip route 45.101.0.0 255.255.0.0 45.235.17.1
+ip route 45.101.0.0 255.255.0.0 45.236.24.1
+ip route 45.102.0.0 255.255.0.0 45.235.17.1
+ip route 45.102.0.0 255.255.0.0 45.236.24.1
+ip route 45.111.0.0 255.255.0.0 45.235.17.1
+ip route 45.111.0.0 255.255.0.0 45.236.24.1
+ip route 45.112.0.0 255.255.0.0 45.235.17.1
+ip route 45.112.0.0 255.255.0.0 45.236.24.1
+ip ssh version 2
+!
+logging facility local5
+logging source-interface Vlan1
+logging buffered 40000
+logging host 182.198.132.85
+logging host 182.195.85.14
+!
+ip access-list standard 2
+ 10 permit 45.15.119.65
+ 20 permit 45.12.140.132
+ 30 permit 45.219.1.89
+ 23 permit 45.212.31.94
+ 40 permit 182.198.152.47
+ 50 permit 182.198.156.33
+ 60 permit 182.198.156.34
+ 70 permit 182.198.156.35
+ 80 permit 45.1.80.157
+ 90 permit 45.112.7.187
+ 100 permit 45.1.80.158
+ 110 permit 45.1.80.159
+ 22 permit 45.1.81.145
+ 21 permit 45.1.81.144
+ 120 permit 45.15.120.180
+ 130 permit 182.198.152.24
+ 140 deny   any
+ip access-list standard 1300
+ 10 permit 182.195.85.14
+ 20 permit 182.198.132.85
+ 30 permit 182.198.152.47
+ 40 permit 182.198.156.33
+ 50 permit 182.198.156.34
+ 60 permit 182.198.156.35
+ 70 permit 182.198.152.24
+ 80 deny   any
+ip access-list extended 150
+ 10 permit ip any host 45.101.86.100
+ 20 permit ip any host 45.101.86.101
+ 30 permit ip 45.97.0.0 0.0.255.255 host 45.1.150.161
+ 40 permit ip 45.97.0.0 0.0.255.255 host 45.1.150.162
+ 50 permit ip 45.97.0.0 0.0.255.255 host 45.101.64.62
+ 60 permit ip 45.97.0.0 0.0.255.255 host 45.12.90.120
+ 70 permit ip 45.97.0.0 0.0.255.255 host 45.1.80.130
+ 80 permit ip 45.97.0.0 0.0.255.255 host 45.12.190.120
+ 90 deny   ip 45.97.0.0 0.0.255.255 45.0.0.0 0.255.255.255
+ 100 permit ip 45.97.0.0 0.0.255.255 any
+ 110 permit ip any host 45.10.9.119
+ 120 permit ip any host 45.10.9.128
+ 130 permit ip any host 45.10.9.130
+ 140 permit ip any host 45.12.140.134
+ 150 permit ip any host 45.10.0.193
+ 160 permit ip any host 45.1.150.119
+ 170 permit ip any host 45.1.150.57
+ 180 permit ip any host 45.10.100.229
+ 190 permit ip any host 45.9.39.18
+ 200 permit ip any host 45.15.90.1
+ 210 permit ip any host 45.15.90.2
+ 220 permit ip any host 45.10.0.5
+ 230 permit ip any host 45.9.100.201
+ 240 permit ip any host 45.9.100.204
+ 250 permit ip any host 45.9.100.205
+ 260 permit ip any host 45.1.150.161
+ 270 permit ip any host 45.1.150.162
+ 280 permit ip 45.99.0.0 0.0.255.255 45.15.0.0 0.0.255.255
+ 290 permit ip 45.99.0.0 0.0.255.255 45.9.0.0 0.0.255.255
+ 300 permit ip 45.99.0.0 0.0.255.255 45.99.0.0 0.0.255.255
+ 310 permit ip 45.99.0.0 0.0.255.255 host 45.15.86.100
+ 320 permit ip 45.99.0.0 0.0.255.255 host 45.15.87.100
+ 330 permit ip 45.99.0.0 0.0.255.255 host 45.103.86.100
+ 340 permit ip 45.99.0.0 0.0.255.255 host 45.15.88.100
+ 350 deny   udp any any eq tftp
+ 360 deny   udp any any eq 135
+ 370 deny   udp any any eq netbios-ss
+ 380 deny   udp any any eq 445
+ 390 deny   udp any any eq 1433
+ 400 deny   udp any any eq 1434
+ 410 deny   tcp any any eq msrpc
+ 420 deny   tcp any any eq 137
+ 430 deny   tcp any any eq 138
+ 440 deny   tcp any any eq 139
+ 450 deny   tcp any any eq 445
+ 460 deny   tcp any any eq 4444
+ 470 deny   tcp any any eq 707
+ 480 deny   udp any any eq netbios-ns
+ 490 deny   udp any any eq netbios-dgm
+ 500 permit ip any any
+ip access-list extended 160
+ 10 permit ip any host 45.15.120.180
+ 20 permit ip any host 45.1.222.81
+ 30 permit ip any host 45.1.222.95
+ 40 permit ip any host 45.1.222.96
+ 50 permit ip any host 45.1.80.157
+ 60 permit ip any host 45.1.80.158
+ 70 permit ip any host 45.1.80.159
+ 80 permit ip any host 45.1.80.87
+ 90 permit ip any host 45.1.80.88
+ 100 permit ip any host 45.1.80.89
+ 110 permit ip any host 45.1.50.46
+ 120 permit ip any host 45.112.37.54
+ 130 permit ip any host 45.112.1.36
+ 140 permit ip any host 45.112.1.34
+ 150 permit ip any host 45.101.54.29
+ 160 permit ip any host 45.101.54.30
+ 170 permit ip any host 45.101.54.23
+ 180 permit ip any host 45.103.21.81
+ 190 permit ip any host 45.112.1.30
+ 200 permit ip any host 45.112.1.31
+ 210 permit ip any host 45.112.1.32
+ 220 permit ip any host 45.112.36.87
+ 230 permit ip any host 45.112.36.88
+ 240 permit ip any host 45.12.140.132
+ 250 permit ip any host 45.12.140.134
+ 260 permit ip any host 45.1.150.161
+ 270 permit ip any host 45.1.150.162
+ 280 permit ip any host 45.111.37.25
+ 290 permit ip any host 45.1.40.105
+ 300 permit ip any host 45.101.21.61
+ 310 permit ip any host 45.1.151.116
+ 320 permit ip any host 45.1.150.57
+ 330 permit ip any host 45.1.150.119
+ 340 permit ip any host 45.212.36.57
+ 350 permit ip any host 45.10.0.193
+ 360 permit ip any host 45.100.115.11
+ 370 permit ip any host 45.100.115.12
+ 380 permit ip any host 45.100.115.13
+ 390 permit ip any host 45.212.36.31
+ 400 permit ip any host 45.212.36.32
+ 410 permit ip any host 45.212.36.33
+ 420 permit ip any host 45.212.37.249
+ 430 permit ip any host 45.114.1.54
+ 440 permit ip any host 45.103.21.62
+ 450 permit ip any host 45.103.21.63
+ 460 permit ip any host 45.10.116.104
+ 470 permit ip any host 45.10.116.113
+ 480 permit ip any host 45.10.116.112
+ 490 permit ip any host 45.10.116.114
+ 500 permit ip any host 45.10.105.104
+ 510 permit ip any host 45.10.116.115
+ 520 permit ip any host 45.10.105.112
+ 530 permit ip any host 45.10.116.116
+ 540 permit ip any host 45.10.105.113
+ 550 permit ip any host 45.10.105.114
+ 560 permit ip any host 45.10.105.115
+ 570 permit ip any host 45.10.105.116
+ 580 permit ip any host 45.10.115.121
+ 590 permit ip any host 45.10.115.122
+ 600 permit ip any host 45.10.115.123
+ 610 permit ip any host 45.10.115.140
+ 620 permit ip any host 45.10.115.145
+ 630 permit ip any host 45.10.115.151
+ 640 permit ip any host 45.10.115.152
+ 650 permit ip any host 45.10.115.154
+ 660 permit ip any host 45.15.112.16
+ 670 permit ip any host 45.15.112.17
+ 680 permit ip any host 45.15.112.163
+ 690 permit ip any host 45.15.112.18
+ 700 permit ip any host 45.15.112.19
+ 710 permit ip any host 45.15.112.4
+ 720 permit ip any host 45.15.112.23
+ 730 permit ip any host 45.15.112.24
+ 740 permit ip any host 45.15.112.207
+ 750 permit ip any host 45.15.112.111
+ 760 permit ip any host 45.15.112.159
+ 770 permit ip any host 45.15.112.225
+ 780 permit ip any host 45.15.112.30
+ 790 permit ip any host 45.15.112.31
+ 800 permit ip any host 45.100.117.20
+ 810 permit ip any host 45.100.118.62
+ 820 permit ip any host 45.100.118.63
+ 830 permit ip any host 45.100.118.64
+ 840 permit ip any host 45.100.118.65
+ 850 permit ip any host 45.100.117.21
+ 860 permit ip any host 45.100.118.66
+ 870 permit ip any host 45.100.118.67
+ 871 permit ip any 45.100.117.0 0.0.0.255
+ 872 permit ip any 45.110.0.0 0.0.255.255
+ 880 permit ip any 45.100.120.0 0.0.7.255
+ 881 permit ip any host 45.112.37.55
+ 882 permit ip any host 45.112.36.135
+ 883 permit ip any host 45.112.31.87
+ 884 permit ip any host 45.112.36.116
+ 890 permit ip any 45.100.128.0 0.0.7.255
+ 900 permit ip any 45.100.136.0 0.0.7.255
+ 910 permit ip any 45.100.144.0 0.0.7.255
+ 920 permit ip any host 45.101.41.128
+ 930 permit ip any host 45.1.80.46
+ 940 permit ip any 45.100.109.0 0.0.0.255
+ 950 permit ip any 45.100.107.0 0.0.0.255
+ 960 permit ip any 45.15.119.0 0.0.0.255
+ 970 permit tcp any any eq 7795
+ 980 permit tcp any any eq 7700
+ 990 permit ip any host 45.12.90.44
+ 1000 permit icmp any 45.0.0.0 0.255.255.255
+ 1010 permit ip 45.45.0.0 0.0.255.255 45.45.0.0 0.0.255.255
+ 1020 deny   ip 45.46.0.0 0.0.255.255 45.0.0.0 0.255.255.255
+ 1030 deny   ip 45.45.0.0 0.0.255.255 45.0.0.0 0.255.255.255
+ 1040 permit ip any any
+!
+snmp-server community ghfod2~~ ro 1300
+tacacs-server directed-request
+tacacs-server key sable
+!
+banner login
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//   - This system is to be logged in to or                         //
+//     used only by specifically authorized personnel.              //
+//   - Any unauthorized use of the system is unlawful, and may be   //
+//     subject to civil and/or criminal penalties.                  //
+//   - Any use of the system may be logged or monitored, and the    //
+//     resulting logs may be used as evidence in court              //
+//   - In logging in this system, we assume                         //
+//     that you already agree our policy.                           //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+EOF
+!
+alias exec sr show run
+alias exec sri show run | in
+alias exec srb show run | be
+alias exec c config t
+!
+management console
+   idle-timeout 5
+!
+aaa authorization exec default local
+!
+management ssh
+   ip access-group 2 in
+   idle-timeout 5
+!
+ntp server 45.1.40.184
+ntp server 45.12.30.159
+!
+mac address-table aging-time 14400 

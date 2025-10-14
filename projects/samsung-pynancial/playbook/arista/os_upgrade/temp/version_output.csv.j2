@@ -1,0 +1,4 @@
+Hostname,Version,Model,Serial,Uptime
+{% for item in collected_versions %}
+{{ item.hostname }},{{ item.version }},{{ item.model }},{{ item.serial }},{{ item.uptime }}
+{% endfor %}

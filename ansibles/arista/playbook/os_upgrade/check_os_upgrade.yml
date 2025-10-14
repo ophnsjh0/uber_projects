@@ -1,0 +1,35 @@
+---
+  - name: Post-reboot - Check version (JSON)
+    hosts: arista_switches
+    gather_facts: no
+    connection: network_cli
+    tasks:
+      - name: Step 6 - Show version (JSON output)
+        arista.eos.eos_command:
+          commands:
+            - "show version | json"
+        register: version_raw
+        tags: version
+
+      - name: Extract version details
+        set_fact:
+          version_info: >-
+            {{
+              {
+                'hostname': inventory_hostname,
+                'version': version_raw.stdout[0].version,
+                'model': version_raw.stdout[0].modelName,
+                'serial': version_raw.stdout[0].serialNumber,
+                'uptime': version_raw.stdout[0].uptime
+              }
+            }}
+        tags: version
+
+      - name: Append version info to CSV
+        local_action:
+          module: copy
+          content: "{{ version_info.hostname }},{{ version_info.version }},{{ version_info.model }},{{ version_info.serial }},{{ version_info.uptime }}\n"
+          dest: "./version_output.csv"
+          mode: 'a'
+        delegate_to: localhost
+        tags: version

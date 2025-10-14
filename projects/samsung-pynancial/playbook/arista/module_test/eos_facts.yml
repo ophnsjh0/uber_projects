@@ -1,0 +1,15 @@
+---
+- name : arist facts test
+  hosts : arista
+  gather_facts: yes
+
+  tasks:
+    - name: gather all facts
+      arista.eos.eos_facts:
+        gather_subset: all
+      register: eos_facts
+
+    - name: debug
+      debug:
+        var: eos_facts.ansible_facts.ansible_net_interfaces
+          

@@ -1,0 +1,23 @@
+all:
+  children:
+    arista:
+      hosts:
+        arista01:
+          ansible_host: 192.168.74.139
+          ansible_user: admin
+          ansible_ssh_pass: admin
+          ansible_become: true
+          ansible_become_method: enable
+          ansible_become_password: admin
+          ansible_network_os: eos
+          ansible_connection: network_cli
+
+        arista02:
+          ansible_host: 192.168.74.138
+          ansible_user: admin
+          ansible_ssh_pass: admin
+          ansible_become: true
+          ansible_become_method: enable
+          ansible_become_password: admin
+          ansible_network_os: eos
+          ansible_connection: network_cli

@@ -1,0 +1,21 @@
+---
+- name: Apply config based on serial number
+  hosts: arista_switches
+  gather_facts: no
+
+  vars:
+    config_dir: "./config"
+
+  tasks:
+    - name: Read config file mapped to device serial
+      ansible.builtin.slurp:
+        src: "{{ config_dir }}/{{ device_serial }}.txt"
+      register: config_file
+
+    - name: Convert base64 config to string
+      set_fact:
+        config_lines: "{{ config_file['content'] | b64decode | splitlines() }}"
+
+    - name: Apply config to device
+      arista.eos.eos_config:
+        lines: "{{ config_lines }}"

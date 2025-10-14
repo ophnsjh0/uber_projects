@@ -1,0 +1,44 @@
+---
+- name: Collect version info from all switches
+  hosts: arista_switches
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Show version in JSON
+      arista.eos.eos_command:
+        commands:
+          - "show version | json"
+      register: version_raw
+
+    - name: Set version facts on self
+      set_fact:
+        version_info: >-
+          {{
+            {
+              'hostname': inventory_hostname,
+              'version': version_raw.stdout[0].version,
+              'model': version_raw.stdout[0].modelName,
+              'serial': version_raw.stdout[0].serialNumber,
+              'uptime': version_raw.stdout[0].uptime
+            }
+          }}
+
+- name: Write collected version info to CSV
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: Aggregate all version_info from hosts
+      set_fact:
+        collected_versions: >-
+          {{
+            groups['arista_switches']
+            | map('extract', hostvars, 'version_info')
+            | list
+          }}
+
+    - name: Write version info to CSV using template
+      template:
+        src: temp/version_output.csv.j2
+        dest: ./version_output.csv
+        mode: '0644'

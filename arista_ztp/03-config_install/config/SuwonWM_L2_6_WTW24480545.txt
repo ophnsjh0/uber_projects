@@ -1,0 +1,472 @@
+!
+!
+! boot system flash:/EOS-4.32.5M.swi
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+hostname SuwonWM_L2_6
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no aaa root
+!
+!
+clock timezone Asia/Seoul
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+enable password sha512 $6$7pEboAFGQtG6qI7u$Pwa35ScbFmHf7Tz7wZHw/OaI1/C1rI7RnyZtzWc5zBDmgzEihkwYZZEodMaiZjGsjKxzvxW/wvVfrwb7ccaKd0
+!
+username admin role network-operator secret sha512 $6$Qopkkg5SKJXH6bQF$4NJLk8zlePzVcw7E0wOPfTeCsjK2Vn4lYeoO1pom618XpHCX.4zBvVNhnHG.XX5yMKMbiGfP3qhI1uOwIIEp//
+username fnmidas privilege 15 role network-admin secret sha512 $6$LGJ0wysAbjms50Tx$KEk5QynlZ1Ku1VG55LM5jgzsSPqTJ.6srDNGqVu13RQemoGAHNbhhR8RwoCzX30NvKBlwkDtrlDw5FXHJMlyj0
+username nwmonitor privilege 5 role network-operator secret sha512 $6$2ezlw78qvQ5Q1c/E$AyWfwCgiAA9S1ohv9GvHUy3JGbYLKNqX/BLlzOU/nyoXBygT6RXa9cNQwTMZzmVJUkwDopcE0xnr9uNVQatqm1
+!
+!
+!
+spanning-tree mode mstp
+spanning-tree edge-port bpduguard default
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+service unsupported-transceiver SamsungSecurities 7a0e7ed5
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+vlan 1
+   name JW_LAN_PC+VOICE
+!
+vlan 10
+   name CW_LAN
+!
+!
+!
+!
+!
+!
+!
+!
+!
+monitor loop-protection
+   no shutdown
+   protect vlan 1,10
+   transmit-interval 1
+   disabled-time 0
+!
+!
+interface Port-Channel100
+ description ## SuwonWM_L3, Po160 ##
+ switchport mode trunk
+ no loop-protection
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Ethernet1
+ description ## SuwonWM_SW_L3_1 eth8 ##
+   channel-group 100 mode active
+!
+!
+interface Ethernet2
+ description ## SuwonWM_YD_L3_2 eth8 ##
+   channel-group 100 mode active
+!
+interface Ethernet3
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet4
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet5
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet6
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet7
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet8
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet9
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet10
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet11
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet12
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet13
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet14
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet15
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet16
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet17
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet18
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet19
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet20
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet21
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet22
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet23
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet24
+ description ## PC ##
+ spanning-tree portfast
+!
+!
+interface Ethernet25
+!
+interface Ethernet26
+!
+interface Ethernet27
+!
+interface Ethernet28
+!
+interface Vlan1
+ ip address 45.3.11.229 255.255.255.0
+ des JW_LAN_PC+VOICE
+!
+!
+no ip routing
+no ip icmp redirect
+ip icmp rate-limit-unreachable 0
+ip route 0.0.0.0/0 45.3.11.241 name Default-Gateway
+!
+!
+!
+!
+!
+!
+!
+logging buffered 40000
+logging host 182.195.85.14
+logging host 70.222.19.62
+logging source-interface vlan 1
+!
+ip access-list standard 2
+   10 permit host 45.1.81.144
+   20 permit host 45.1.81.145
+   30 permit host 45.212.31.94
+   40 permit host 45.219.1.89
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip access-list standard 1300
+   10 permit host 182.195.85.14
+   20 permit host 70.222.19.62
+!
+!
+!
+!
+!
+!
+!
+snmp-server community ghfod2~~ RO 1300
+!
+!
+!
+!
+!
+terminal length 30
+load-interval default 1
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+management console
+   idle-timeout 5
+!
+aaa authorization exec default local
+!
+management ssh
+!
+!
+management telnet
+   shutdown
+!
+!
+ntp server 45.1.40.184
+ntp server 45.12.30.159
+!
+no username admin
+!
+wr

@@ -1,0 +1,24 @@
+---
+- name: Gather running-config from switches
+  hosts: arista_switches
+  gather_facts: false
+
+  tasks:
+    # - name: Disable paging for terminal
+    #   arista.eos.eos_command:
+    #     commands: ['terminal length 0']
+
+    - name: Run 'show running-config'
+      arista.eos.eos_command:
+        commands: ['show running-config']
+      register: show_config_output
+
+    - name: Extract hostname from config
+      set_fact:
+        switch_hostname: "{{ show_config_output.stdout[0] | regex_search('^hostname\\s+(\\S+)', '\\1', multiline=True) }}"
+
+    - name: Save config to local file named by hostname
+      local_action:
+        module: copy
+        content: "{{ show_config_output.stdout[0] }}"
+        dest: "./configs/{{ switch_hostname | default(inventory_hostname) }}.txt"

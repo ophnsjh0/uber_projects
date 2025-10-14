@@ -1,0 +1,219 @@
+! Command: show running-config
+! device: SuwonWM-L2-5 (CCS-720DP-24S-2, EOS-4.32.5M)
+!
+! boot system flash:/EOS-4.32.5M.swi
+!
+enable password sha512 $6$7pEboAFGQtG6qI7u$Pwa35ScbFmHf7Tz7wZHw/OaI1/C1rI7RnyZtzWc5zBDmgzEihkwYZZEodMaiZjGsjKxzvxW/wvVfrwb7ccaKd0
+no aaa root
+no username admin
+!
+username fnmidas privilege 15 role network-admin secret sha512 $6$LGJ0wysAbjms50Tx$KEk5QynlZ1Ku1VG55LM5jgzsSPqTJ.6srDNGqVu13RQemoGAHNbhhR8RwoCzX30NvKBlwkDtrlDw5FXHJMlyj0
+username nwmonitor privilege 5 role network-operator secret sha512 $6$2ezlw78qvQ5Q1c/E$AyWfwCgiAA9S1ohv9GvHUy3JGbYLKNqX/BLlzOU/nyoXBygT6RXa9cNQwTMZzmVJUkwDopcE0xnr9uNVQatqm1
+!
+management api http-commands
+   protocol http
+   no shutdown
+!
+terminal length 30
+!
+no service interface inactive port-id allocation disabled
+!
+load-interval default 1
+!
+service routing protocols model multi-agent
+!
+logging buffered 40000
+logging host 182.195.85.14
+logging host 70.222.19.62
+logging source-interface Vlan1
+!
+hostname SuwonWM_L2_5
+!
+snmp-server community ghfod2~~ ro 1300
+!
+spanning-tree mode mstp
+spanning-tree edge-port bpduguard default
+!
+service unsupported-transceiver SamsungSecurities 7a0e7ed5
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+clock timezone Asia/Seoul
+!
+vlan 1
+   name JW_LAN_PC+VOICE
+!
+vlan 10
+   name CW_LAN
+!
+banner login
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//   - This system is to be logged in to or                         //
+//     used only by specifically authorized personnel.              //
+//   - Any unauthorized use of the system is unlawful, and may be   //
+//     subject to civil and/or criminal penalties.                  //
+//   - Any use of the system may be logged or monitored, and the    //
+//     resulting logs may be used as evidence in court              //
+//   - In logging in this system, we assume                         //
+//     that you already agree our policy.                           //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+EOF
+!
+management console
+   idle-timeout 5
+!
+aaa authorization exec default local
+!
+interface Port-Channel100
+   description ## SuwonWM_L3, Po150 ##
+   switchport mode trunk
+   no loop-protection
+!
+interface Ethernet1
+   description ## SuwonWM_SW_L3_1 eth7 ##
+   channel-group 100 mode active
+!
+interface Ethernet2
+   description ## SuwonWM_YD_L3_2 eth7 ##
+   channel-group 100 mode active
+!
+interface Ethernet3
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet4
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet5
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet6
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet7
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet8
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet9
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet10
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet11
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet12
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet13
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet14
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet15
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet16
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet17
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet18
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet19
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet20
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet21
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet22
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet23
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet24
+   description ## PC ##
+   spanning-tree portfast
+!
+interface Ethernet25
+!
+interface Ethernet26
+!
+interface Ethernet27
+!
+interface Ethernet28
+!
+interface Management1
+   ip address 10.10.10.110/24
+!
+interface Vlan1
+   description JW_LAN_PC+VOICE
+   ip address 45.3.11.227/24
+!
+ip access-list standard 1300
+   10 permit host 182.195.85.14
+   20 permit host 70.222.19.62
+!
+ip access-list standard 2
+   10 permit host 45.1.81.144
+   20 permit host 45.1.81.145
+   30 permit host 45.212.31.94
+   40 permit host 45.219.1.89
+!
+no ip routing
+no ip icmp redirect
+ip icmp rate-limit-unreachable 0
+!
+ip route 0.0.0.0/0 45.3.11.241 name Default-Gateway
+!
+monitor loop-protection
+   no shutdown
+   protect vlan 1,10
+   transmit-interval 1
+   disabled-time 0
+!
+ntp server 45.1.40.184
+ntp server 45.12.30.159
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

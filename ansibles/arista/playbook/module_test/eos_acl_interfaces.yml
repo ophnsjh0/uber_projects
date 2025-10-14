@@ -1,0 +1,24 @@
+---
+- name : arist facts test
+  hosts : arista
+  gather_facts: yes
+
+  tasks:
+    - name: Merge module attributes of given access-groups
+      arista.eos.eos_acl_interfaces:
+        config:
+          - name: Ethernet2
+            access_groups:
+              - afi: ipv4
+                acls:
+                  name: acl01
+                  direction: in
+              - afi: ipv4
+                acls:
+                  name: acl03
+                  direction: out
+        state: merged
+
+    - name: debug
+      debug:
+        var: eos_facts.ansible_facts.ansible_net_interfaces

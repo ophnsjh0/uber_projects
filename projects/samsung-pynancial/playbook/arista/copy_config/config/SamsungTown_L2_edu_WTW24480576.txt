@@ -1,0 +1,317 @@
+!
+! boot system flash:/EOS-4.32.5M.swi
+!
+!
+!
+!
+no aaa root
+!
+clock timezone Asia/Seoul
+!
+!
+hostname SamsungTown_Edu_CW
+!
+enable password sha512 $6$7pEboAFGQtG6qI7u$Pwa35ScbFmHf7Tz7wZHw/OaI1/C1rI7RnyZtzWc5zBDmgzEihkwYZZEodMaiZjGsjKxzvxW/wvVfrwb7ccaKd0
+!
+username admin role network-operator secret sha512 $6$Qopkkg5SKJXH6bQF$4NJLk8zlePzVcw7E0wOPfTeCsjK2Vn4lYeoO1pom618XpHCX.4zBvVNhnHG.XX5yMKMbiGfP3qhI1uOwIIEp//
+username fnmidas privilege 15 role network-admin secret sha512 $6$LGJ0wysAbjms50Tx$KEk5QynlZ1Ku1VG55LM5jgzsSPqTJ.6srDNGqVu13RQemoGAHNbhhR8RwoCzX30NvKBlwkDtrlDw5FXHJMlyj0
+username nwmonitor privilege 5 role network-operator secret sha512 $6$2ezlw78qvQ5Q1c/E$AyWfwCgiAA9S1ohv9GvHUy3JGbYLKNqX/BLlzOU/nyoXBygT6RXa9cNQwTMZzmVJUkwDopcE0xnr9uNVQatqm1
+!
+spanning-tree mode mstp
+spanning-tree edge-port bpduguard default
+!
+service unsupported-transceiver SamsungSecurities 7a0e7ed5
+!
+vlan 1
+   name JW_LAN_PC+VOICE
+!
+vlan 10
+   name CW_LAN
+!
+monitor loop-protection
+   no shutdown
+   protect vlan 1,10
+   transmit-interval 1
+   disabled-time 0
+!
+interface Port-Channel100
+ description ## SamsungTown_L3, Po220 ##
+ switchport mode trunk
+ no loop-protection
+!
+!
+!
+interface Ethernet1
+ description ## SamsungTown_SC_L3_1 eth12 ##
+   channel-group 100 mode active
+!
+interface Ethernet2
+ description ## SamsungTown_YD_L3_2 eth12 ##
+   channel-group 100 mode active
+!
+!
+!
+!
+!
+!
+!
+interface Ethernet3
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet4
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet5
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet6
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet7
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet8
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet9
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet10
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet11
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet12
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet13
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet14
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet15
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet16
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet17
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet18
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet19
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet20
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet21
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet22
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet23
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet24
+ spanning-tree portfast
+ description ## PC ##
+!
+!
+!
+interface Ethernet25
+!
+interface Ethernet26
+!
+interface Ethernet27
+!
+interface Ethernet28
+!
+!
+interface Vlan1
+ ip address 45.2.60.231 255.255.255.0
+ des JW_LAN_PC+VOICE
+!
+!
+no ip routing
+no ip icmp redirect
+ip icmp rate-limit-unreachable 0
+ip route 0.0.0.0/0 45.2.60.241 name Default-Gateway
+!
+!
+!
+!
+!
+!
+!
+logging buffered 40000
+logging host 182.195.85.14
+logging host 70.222.19.62
+logging source-interface vlan 1
+!
+ip access-list standard 2
+   10 permit host 45.1.81.144
+   20 permit host 45.1.81.145
+   30 permit host 45.212.31.94
+   40 permit host 45.219.1.89
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip access-list standard 1300
+   10 permit host 182.195.85.14
+   20 permit host 70.222.19.62
+!
+!
+!
+!
+!
+!
+!
+snmp-server community ghfod2~~ RO 1300
+!
+!
+!
+!
+!
+terminal length 30
+load-interval default 1
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+management console
+   idle-timeout 5
+!
+aaa authorization exec default local
+!
+management ssh
+!
+!
+management telnet
+   shutdown
+!
+!
+ntp server 45.1.40.184
+ntp server 45.12.30.159
+!
+no username admin
+!
+wr

@@ -1,0 +1,61 @@
+---
+- name: Basic Setting EOS on Arista switch
+  hosts: arista_switches
+  gather_facts: no
+  connection: network_cli
+  vars:
+    host_map:
+      "192.168.74.135": "BB1"
+      "192.168.74.136": "BB2"
+      "192.168.74.137": "SW1"
+      "192.168.74.138": "SW2"
+
+    timezone: "Asia/Seoul"
+    allowed_ssh_hosts:
+      - 192.168.54.30
+      - 192.168.74.135
+      - 192.168.74.136
+      - 192.168.74.137
+      - 192.168.74.138
+ 
+  tasks:
+    - name: Set hostname based on IP mapping
+      arista.eos.eos_config:
+        lines:
+          - "hostname {{ host_map[inventory_hostname] }}"
+      tags: hostname
+
+    - name: Set timezone
+      arista.eos.eos_config:
+        lines:
+          - "clock timezone {{ timezone }}"
+      tags: timezone
+
+    - name: Configure AAA authentication to local
+      arista.eos.eos_config:
+        lines:
+          - "aaa authorization exec default local"
+          - "aaa authentication login default local"
+      tags: aaa
+
+    - name: Create SSH access list with permitted IPs
+      arista.eos.eos_config:
+        lines: >-
+          {{
+            ['ip access-list standard SSH_ALLOWED'] +
+            allowed_ssh_hosts | map('regex_replace', '^', '  permit ') | map('regex_replace', '$', ' 0.0.0.0') | list
+          }}
+      tags: ssh_acl
+
+    - name: Apply SSH access-group to management
+      arista.eos.eos_config:
+        lines:
+          - "management ssh"
+          - "   ip access-group SSH_ALLOWED vrf mgmt-vrf in"
+      tags: ssh_acl
+
+    - name: Enable STP in rapid-pvst mode
+      arista.eos.eos_config:
+        lines:
+          - "spanning-tree mode rapid-pvst"
+      tags: stp

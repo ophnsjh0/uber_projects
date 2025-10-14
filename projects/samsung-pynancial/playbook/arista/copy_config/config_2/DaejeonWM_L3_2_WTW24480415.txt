@@ -1,0 +1,7 @@
+!
+interface Management1
+   description [NW]Mlag Keepalive
+   vrf MGMT
+   ip address 9.9.9.2/24
+!
+wr
