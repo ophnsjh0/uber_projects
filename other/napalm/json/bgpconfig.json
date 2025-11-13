@@ -1,0 +1,125 @@
+{
+    "EVPN": {
+        "type": "",
+        "multipath": False,
+        "apply_groups": [],
+        "remove_private_as": False,
+        "multihop_ttl": 3,
+        "remote_as": 65000,
+        "local_address": "",
+        "local_as": 65013,
+        "description": "",
+        "import_policy": "",
+        "export_policy": "",
+        "prefix_limit": {},
+        "neighbors": {
+            "192.168.0.10": {
+                "description": "SPINE1_EVPN",
+                "remote_as": 65000,
+                "local_address": "",
+                "local_as": 65013,
+                "nhs": False,
+                "route_reflector_client": False,
+                "import_policy": "",
+                "export_policy": "",
+                "authentication_key": "",
+                "prefix_limit": {}
+            },
+            "192.168.0.11": {
+                "description": "SPINE2_EVPN",
+                "remote_as": 65000,
+                "local_address": "",
+                "local_as": 65013,
+                "nhs": False,
+                "route_reflector_client": False,
+                "import_policy": "",
+                "export_policy": "",
+                "authentication_key": "",
+                "prefix_limit": {}
+            }
+        }
+    },
+    "IBGP": {
+        "type": "",
+        "multipath": False,
+        "apply_groups": [],
+        "remove_private_as": False,
+        "multihop_ttl": 0,
+        "remote_as": 65013,
+        "local_address": "",
+        "local_as": 65013,
+        "description": "",
+        "import_policy": "",
+        "export_policy": "",
+        "prefix_limit": {},
+        "neighbors": {
+            "10.10.10.14": {
+                "description": "MLAG_IBGP",
+                "remote_as": 65013,
+                "local_address": "",
+                "local_as": 65013,
+                "nhs": True,
+                "route_reflector_client": False,
+                "import_policy": "",
+                "export_policy": "",
+                "authentication_key": "",
+                "prefix_limit": {}
+            }
+        }
+    },
+    "SPINE": {
+        "type": "",
+        "multipath": False,
+        "apply_groups": [],
+        "remove_private_as": False,
+        "multihop_ttl": 0,
+        "remote_as": 65000,
+        "local_address": "",
+        "local_as": 65013,
+        "description": "",
+        "import_policy": "",
+        "export_policy": "",
+        "prefix_limit": {},
+        "neighbors": {
+            "192.168.200.33": {
+                "description": "SPINE1_Underlay",
+                "remote_as": 65000,
+                "local_address": "",
+                "local_as": 65013,
+                "nhs": False,
+                "route_reflector_client": False,
+                "import_policy": "",
+                "export_policy": "",
+                "authentication_key": "",
+                "prefix_limit": {}
+            },
+            "192.168.200.41": {
+                "description": "SPINE2_Underlay",
+                "remote_as": 65000,
+                "local_address": "",
+                "local_as": 65013,
+                "nhs": False,
+                "route_reflector_client": False,
+                "import_policy": "",
+                "export_policy": "",
+                "authentication_key": "",
+                "prefix_limit": {}
+            }
+        }
+    },
+    "_": {
+        "type": "",
+        "multipath": False,
+        "apply_groups": [],
+        "remove_private_as": False,
+        "multihop_ttl": 0,
+        "remote_as": 0,
+        "local_address": "",
+        "local_as": 65013,
+        "description": "",
+        "import_policy": "",
+        "export_policy": "",
+        "prefix_limit": {},
+        "neighbors": {}
+    }
+}

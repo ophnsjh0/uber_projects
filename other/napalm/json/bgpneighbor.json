@@ -1,0 +1,124 @@
+{
+    "VRF-A": {
+        "peers": {},
+        "router_id": "10.10.10.1"
+    },
+    "VRF-B": {
+        "peers": {},
+        "router_id": "10.10.10.50"
+    },
+    "VRF-C": {
+        "peers": {},
+        "router_id": "10.10.10.66"
+    },
+    "global": {
+        "peers": {
+            "10.10.10.14": {
+                "local_as": 65013,
+                "remote_as": 65013,
+                "remote_id": "192.168.0.19",
+                "is_up": True,
+                "is_enabled": True,
+                "description": "MLAG_IBGP",
+                "uptime": 2337,
+                "address_family": {
+                    "ipv4": {
+                        "received_prefixes": 18,
+                        "accepted_prefixes": 18,
+                        "sent_prefixes": 16
+                    },
+                    "ipv6": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    }
+                }
+            },
+            "192.168.0.10": {
+                "local_as": 65013,
+                "remote_as": 65000,
+                "remote_id": "192.168.0.10",
+                "is_up": True,
+                "is_enabled": True,
+                "description": "SPINE1_EVPN",
+                "uptime": 2336,
+                "address_family": {
+                    "ipv4": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    },
+                    "ipv6": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    }
+                }
+            },
+            "192.168.0.11": {
+                "local_as": 65013,
+                "remote_as": 65000,
+                "remote_id": "192.168.0.11",
+                "is_up": True,
+                "is_enabled": True,
+                "description": "SPINE2_EVPN",
+                "uptime": 2336,
+                "address_family": {
+                    "ipv4": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    },
+                    "ipv6": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    }
+                }
+            },
+            "192.168.200.33": {
+                "local_as": 65013,
+                "remote_as": 65000,
+                "remote_id": "192.168.0.10",
+                "is_up": True,
+                "is_enabled": True,
+                "description": "SPINE1_Underlay",
+                "uptime": 2337,
+                "address_family": {
+                    "ipv4": {
+                        "received_prefixes": 9,
+                        "accepted_prefixes": 9,
+                        "sent_prefixes": 20
+                    },
+                    "ipv6": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    }
+                }
+            },
+            "192.168.200.41": {
+                "local_as": 65013,
+                "remote_as": 65000,
+                "remote_id": "192.168.0.11",
+                "is_up": True,
+                "is_enabled": True,
+                "description": "SPINE2_Underlay",
+                "uptime": 2337,
+                "address_family": {
+                    "ipv4": {
+                        "received_prefixes": 9,
+                        "accepted_prefixes": 9,
+                        "sent_prefixes": 12
+                    },
+                    "ipv6": {
+                        "received_prefixes": 0,
+                        "accepted_prefixes": 0,
+                        "sent_prefixes": 0
+                    }
+                }
+            }
+        },
+        "router_id": "192.168.0.18"
+    }
+}

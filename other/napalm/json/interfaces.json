@@ -1,0 +1,263 @@
+{
+    "Management1": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824604.075447,
+        "mtu": 1500,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:01:00:00"
+    },
+    "Ethernet7": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.5951924,
+        "mtu": 9214,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:01:00:07"
+    },
+    "Ethernet8": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824246.6900558,
+        "mtu": 9214,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:01:00:08"
+    },
+    "Ethernet2": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.5956795,
+        "mtu": 9194,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Ethernet4": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.5943167,
+        "mtu": 9214,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:01:00:04"
+    },
+    "Ethernet1": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.5960474,
+        "mtu": 9194,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Ethernet3": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "VRF-A_Serial#1",
+        "last_flapped": 1762824257.5987163,
+        "mtu": 1500,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Ethernet5": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.5948071,
+        "mtu": 9214,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:01:00:05"
+    },
+    "Ethernet6": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.5991464,
+        "mtu": 9214,
+        "speed": 1000.0,
+        "mac_address": "50:00:00:01:00:06"
+    },
+    "Vlan4099": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824258.4103677,
+        "mtu": 9164,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan400": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "VRF-B_Service_WEB",
+        "last_flapped": 1762824256.8083153,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan4097": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824258.410121,
+        "mtu": 9164,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan310": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "VRF-A_Service_WAS_DB",
+        "last_flapped": 1762824256.7977285,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan100": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "Defualt_Service_WEB",
+        "last_flapped": 1762824256.8002107,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan1002": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "VRF-C_Serial",
+        "last_flapped": 1762824256.9676132,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan1000": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "Default_Serial",
+        "last_flapped": 1762824256.96192,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan500": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "VRF-C_Service_Storage",
+        "last_flapped": 1762824256.7994153,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan1001": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "VRF-B_Serial",
+        "last_flapped": 1762824256.9653099,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan4094": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824247.8578491,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan410": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "VRF-B_Service_WAS_DB",
+        "last_flapped": 1762824256.8053212,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan510": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "VRF-C_Service_Backup",
+        "last_flapped": 1762824256.795708,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan4098": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824258.4102416,
+        "mtu": 9164,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan300": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "VRF-A_Service_WEB",
+        "last_flapped": 1762824256.8028116,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Vlan200": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "Defualt_Service_WAS_DB",
+        "last_flapped": 1762824256.8050756,
+        "mtu": 1500,
+        "speed": 0.0,
+        "mac_address": "50:00:00:D7:EE:0B"
+    },
+    "Port-Channel20": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.0156214,
+        "mtu": 0,
+        "speed": 0.0,
+        "mac_address": "50:00:00:01:00:05"
+    },
+    "Port-Channel10": {
+        "is_up": False,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824257.0873566,
+        "mtu": 0,
+        "speed": 0.0,
+        "mac_address": "50:00:00:01:00:04"
+    },
+    "Loopback0": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": 1762824226.3131728,
+        "mtu": 65535,
+        "speed": 0.0,
+        "mac_address": ""
+    },
+    "Loopback1": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "VxLan VTEP",
+        "last_flapped": 1762824226.313271,
+        "mtu": 65535,
+        "speed": 0.0,
+        "mac_address": ""
+    },
+    "Vxlan1": {
+        "is_up": True,
+        "is_enabled": True,
+        "description": "",
+        "last_flapped": -1.0,
+        "mtu": 0,
+        "speed": 0.0,
+        "mac_address": ""
+    }
+}

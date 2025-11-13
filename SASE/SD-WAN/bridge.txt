@@ -1,0 +1,34 @@
+# 기존 연결 비활성화
+nmcli con down "Wired connection 1"
+nmcli con down "Wired connection 2"
+
+# 브리지 생성
+sudo nmcli connection add type bridge ifname br0 con-name br0
+sudo nmcli connection modify br0 ipv4.method disabled ipv6.method ignore
+
+# 포트 추가
+sudo nmcli connection add type ethernet ifname eth0 master br0
+sudo nmcli connection add type ethernet ifname eth1 master br0
+
+# 브리지 활성화
+sudo nmcli con up br0
+
+
+유지
+sudo nano /etc/netplan/01-netcfg.yaml
+
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0: {}
+    eth1: {}
+  bridges:
+    br0:
+      interfaces: [eth0, eth1]
+      dhcp4: no
+      dhcp6: no
+
+
+sudo netplan apply
